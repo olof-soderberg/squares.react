@@ -59,42 +59,42 @@ const SquareGrid = ({ squares, gridSize }) => {
   const gapSize = 16; // 1rem = 16px
   const totalSize = gridSize * squareSize + (gridSize - 1) * gapSize;
   
+  // Since we need dynamic grid template, we need to use inline styles for grid structure
   return (
-    <div
-      className="grid-wrapper"
-      style={{
-        width: `${totalSize}px`,
-        height: `${totalSize}px`,
-        position: 'relative',
-      }}
-    >
+    <div className="bg-white rounded-xl shadow-xl p-8">
       <div
-        className="grid"
+        className="grid-wrapper relative"
         style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${gridSize}, ${squareSize}px)`,
-          gridTemplateRows: `repeat(${gridSize}, ${squareSize}px)`,
-          gap: `${gapSize}px`,
-          width: '100%',
-          height: '100%',
+          width: `${totalSize}px`,
+          height: `${totalSize}px`,
         }}
       >
-        {grid.map((sq, idx) => {
-          if (sq) {
-            return (
-              <Square 
-                key={idx} 
-                square={sq} 
-                position={idx}
-              />
-            );
-          } 
-          else {
-            return (
-              <div key={idx}></div>
-            );
-          }
-        })}
+        <div
+          className="grid w-full h-full"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${gridSize}, ${squareSize}px)`,
+            gridTemplateRows: `repeat(${gridSize}, ${squareSize}px)`,
+            gap: `${gapSize}px`,
+          }}
+        >
+          {grid.map((sq, idx) => {
+            if (sq) {
+              return (
+                <Square 
+                  key={idx} 
+                  square={sq} 
+                  position={idx}
+                />
+              );
+            } 
+            else {
+              return (
+                <div key={idx}></div>
+              );
+            }
+          })}
+        </div>
       </div>
     </div>
   );

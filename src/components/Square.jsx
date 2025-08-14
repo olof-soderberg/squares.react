@@ -8,11 +8,9 @@ const Square = ({ square, position }) => {
   
   return (
     <div
-      className={`w-10 h-10 rounded-md shadow-md border border-gray-300`}
+      className="w-10 h-10 rounded-lg shadow-lg border border-gray-200 transform hover:scale-110 transition-transform duration-200"
       style={{ 
-        backgroundColor: squareColor,
-        width: '40px',
-        height: '40px'
+        backgroundColor: squareColor
       }}
     >
     </div>
