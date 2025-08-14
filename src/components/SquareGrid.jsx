@@ -4,7 +4,7 @@ import Square from './Square';
 /**
  * Grid that displays squares in a specific pattern
  */
-const SquareGrid = ({ squares, newSquares, gridSize }) => {
+const SquareGrid = ({ squares, gridSize }) => {
   const grid = Array(gridSize * gridSize).fill(null);
 
   // Completely rebuilt algorithm to match the specific pattern:
@@ -54,35 +54,48 @@ const SquareGrid = ({ squares, newSquares, gridSize }) => {
     }
   });
 
+  // Calculate fixed dimensions for the grid container
+  const squareSize = 40; // px
+  const gapSize = 16; // 1rem = 16px
+  const totalSize = gridSize * squareSize + (gridSize - 1) * gapSize;
+  
   return (
     <div
-      className="grid gap-2"
+      className="grid-wrapper"
       style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${gridSize}, 40px)`,
-        gridTemplateRows: `repeat(${gridSize}, 40px)`,
+        width: `${totalSize}px`,
+        height: `${totalSize}px`,
+        position: 'relative',
       }}
     >
-      {grid.map((sq, idx) => {
-        // Find if this square is in the newSquares array
-        const isNew = sq && newSquares.includes(squares.indexOf(sq));
-
-        if (sq) {
-          return (
-            <Square 
-              key={idx} 
-              square={sq} 
-              isNew={isNew}
-              position={idx}
-            />
-          );
-        } 
-        else {
-          return (
-            <div key={idx}></div>
-          );
-        }
-      })}
+      <div
+        className="grid"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: `repeat(${gridSize}, ${squareSize}px)`,
+          gridTemplateRows: `repeat(${gridSize}, ${squareSize}px)`,
+          gap: `${gapSize}px`,
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {grid.map((sq, idx) => {
+          if (sq) {
+            return (
+              <Square 
+                key={idx} 
+                square={sq} 
+                position={idx}
+              />
+            );
+          } 
+          else {
+            return (
+              <div key={idx}></div>
+            );
+          }
+        })}
+      </div>
     </div>
   );
 };

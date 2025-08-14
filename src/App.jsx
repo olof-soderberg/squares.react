@@ -2,14 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import './App.css';
 import SquareGrid from './components/SquareGrid';
 import Controls from './components/Controls';
-import DebugInfo from './components/DebugInfo';
-import LoadingIndicator from './components/LoadingIndicator';
 import ErrorMessage from './components/ErrorMessage';
 import { handleApiError, formatError } from './utils/errorHandling';
 
 function getGridSize(n) {
   // Find the smallest square grid that can fit n squares
-  return Math.ceil(Math.sqrt(n));
+  // Add 1 to reduce frequency of grid resizing
+  return Math.max(2, Math.ceil(Math.sqrt(n + 1)));
 }
 
 function App() {
@@ -17,27 +16,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const [streaming, setStreaming] = useState(false);
   const [error, setError] = useState(null);
-  const [newSquares, setNewSquares] = useState([]);
-  // Use a ref to track the abort controller so we can replace it if needed
   const abortControllerRef = useRef(new AbortController());
-  
-  // Effect to highlight new squares briefly
-  useEffect(() => {
-    if (squares.length > 0) {
-      // Get last square
-      const lastIndex = squares.length - 1;
-      setNewSquares(prev => [...prev, lastIndex]);
-      
-      // Remove highlight after animation
-      const timer = setTimeout(() => {
-        setNewSquares(prev => prev.filter(idx => idx !== lastIndex));
-      }, 1500);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [squares.length]);
   
   useEffect(() => {
     let isMounted = true;
@@ -52,7 +32,6 @@ function App() {
     })
       .then(async response => {
         if (!response.ok) {
-          // Handle error with ProblemDetails support
           const errorDetails = await handleApiError(response);
           throw errorDetails;
         }
@@ -86,7 +65,6 @@ function App() {
     return <ErrorMessage error={error} onRetry={() => window.location.reload()} />;
   }
 
-  // Function to add a new square and refresh the stream
   const addNewSquare = async () => {
     setAdding(true);
     setProcessing(true);
@@ -94,7 +72,7 @@ function App() {
     try {
       console.log("Adding new square...");
       const controller = new AbortController();
-      timeoutId = setTimeout(() => controller.abort(), 7000); // 7 second timeout
+      timeoutId = setTimeout(() => controller.abort(), 10000);
       const response = await fetch("http://localhost:5272/squares", {
         method: 'POST',
         headers: {
@@ -106,7 +84,6 @@ function App() {
       clearTimeout(timeoutId);
       
       if (!response.ok) {
-        // Handle error with ProblemDetails support
         const errorDetails = await handleApiError(response);
         throw errorDetails;
       }
@@ -125,7 +102,6 @@ function App() {
     }
   };
 
-  // Function to clear all squares
   const clearAllSquares = async () => {
     setProcessing(true);
     try {
@@ -139,14 +115,11 @@ function App() {
       });
       
       if (!response.ok) {
-        // Handle error with ProblemDetails support
         const errorDetails = await handleApiError(response);
         throw errorDetails;
       }
       
-      // Clear squares from state
       setSquares([]);
-      setNewSquares([]);
     } catch (err) {
       setError(formatError(err));
       console.error('Error clearing squares:', err);
@@ -158,25 +131,23 @@ function App() {
   const gridSize = getGridSize(squares.length);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <LoadingIndicator processing={processing} adding={adding} />
-      
-      <DebugInfo squares={squares} gridSize={gridSize} streaming={streaming}>
+    <div className="min-h-screen flex flex-col items-center bg-gray-100 pt-8">
+      <div className="mb-6">
         <Controls 
           onAddSquare={addNewSquare} 
           onClearSquares={clearAllSquares} 
           adding={adding}
-          streaming={streaming}
           processing={processing}
           onReload={() => window.location.reload()}
         />
-      </DebugInfo>
+      </div>
       
-      <SquareGrid 
-        squares={squares} 
-        newSquares={newSquares} 
-        gridSize={gridSize} 
-      />
+      <div className="grid-container">
+        <SquareGrid 
+          squares={squares} 
+          gridSize={gridSize} 
+        />
+      </div>
     </div>
   );
 }

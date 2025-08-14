@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Control buttons for application actions
  */
-const Controls = ({ onAddSquare, onClearSquares, adding, streaming, processing, onReload }) => {
+const Controls = ({ onAddSquare, onClearSquares, adding, processing, onReload }) => {
   return (
     <div className="mt-3 flex space-x-3">
       <button 
@@ -15,12 +15,12 @@ const Controls = ({ onAddSquare, onClearSquares, adding, streaming, processing, 
       
       <button 
         className={`px-3 py-1 text-white rounded text-sm flex items-center ${
-          adding || streaming ? 
+          adding ? 
           'bg-gray-400 cursor-not-allowed' : 
           'bg-green-500 hover:bg-green-600'
         }`}
         onClick={onAddSquare}
-        disabled={adding || streaming}
+        disabled={adding}
       >
         {adding ? (
           <>
