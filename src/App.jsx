@@ -5,6 +5,7 @@ import Controls from './components/Controls';
 import DebugInfo from './components/DebugInfo';
 import LoadingIndicator from './components/LoadingIndicator';
 import ErrorMessage from './components/ErrorMessage';
+import { handleApiError, formatError } from './utils/errorHandling';
 
 function getGridSize(n) {
   // Find the smallest square grid that can fit n squares
@@ -45,12 +46,16 @@ function App() {
     fetch("http://localhost:5272/squares", {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
+        'Accept': 'application/json, application/problem+json',
         'Content-Type': 'application/json'
       }
     })
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      .then(async response => {
+        if (!response.ok) {
+          // Handle error with ProblemDetails support
+          const errorDetails = await handleApiError(response);
+          throw errorDetails;
+        }
         return response.json();
       })
       .then(data => {
@@ -61,8 +66,9 @@ function App() {
       })
       .catch(err => {
         if (isMounted) {
-          setError(`Error fetching squares: ${err.message}`);
+          setError(formatError(err));
           setLoading(false);
+          console.error('Error fetching squares:', err);
         }
       });
     return () => {
@@ -77,7 +83,7 @@ function App() {
   }
   
   if (error) {
-    return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
+    return <ErrorMessage error={error} onRetry={() => window.location.reload()} />;
   }
 
   // Function to add a new square and refresh the stream
@@ -92,26 +98,27 @@ function App() {
       const response = await fetch("http://localhost:5272/squares", {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
+          'Accept': 'application/json, application/problem+json',
           'Content-Type': 'application/json'
         },
         signal: controller.signal
       });
       clearTimeout(timeoutId);
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Handle error with ProblemDetails support
+        const errorDetails = await handleApiError(response);
+        throw errorDetails;
       }
+      
       const newSquareResponse = await response.json();
       if (newSquareResponse) {
         setSquares(currentSquares => [...currentSquares, newSquareResponse]);
       }
     } catch (err) {
       clearTimeout(timeoutId);
-      if (err.name === 'AbortError') {
-        setError("Request timed out. The server might be overloaded or unavailable.");
-      } else {
-        setError(`Error adding new square: ${err.message}`);
-      }
+      setError(formatError(err));
+      console.error('Error adding new square:', err);
     } finally {
       setProcessing(false);
       setAdding(false);
@@ -126,18 +133,23 @@ function App() {
       const response = await fetch("http://localhost:5272/squares", {
         method: 'DELETE',
         headers: {
-          'Accept': 'application/json',
+          'Accept': 'application/json, application/problem+json',
           'Content-Type': 'application/json'
         }
       });
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Handle error with ProblemDetails support
+        const errorDetails = await handleApiError(response);
+        throw errorDetails;
       }
+      
       // Clear squares from state
       setSquares([]);
       setNewSquares([]);
     } catch (err) {
-      setError(`Error clearing squares: ${err.message}`);
+      setError(formatError(err));
+      console.error('Error clearing squares:', err);
     } finally {
       setProcessing(false);
     }
