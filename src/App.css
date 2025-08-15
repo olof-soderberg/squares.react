@@ -1,24 +1,2 @@
 /* Any styles that can't be easily represented with Tailwind */
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.grid-wrapper {
-  margin: 0 auto;
-  will-change: auto;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-

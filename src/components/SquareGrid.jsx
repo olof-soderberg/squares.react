@@ -61,7 +61,7 @@ const SquareGrid = ({ squares, gridSize }) => {
   
   // Since we need dynamic grid template, we need to use inline styles for grid structure
   return (
-    <div className="bg-white rounded-xl shadow-xl p-8">
+    <div className="bg-emerald-100 rounded-xl shadow-xl p-8">
       <div
         className="grid-wrapper relative"
         style={{

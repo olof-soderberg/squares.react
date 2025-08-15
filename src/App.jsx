@@ -5,6 +5,8 @@ import Controls from './components/Controls';
 import ErrorMessage from './components/ErrorMessage';
 import { handleApiError, formatError } from './utils/errorHandling';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 function getGridSize(n) {
   // Find the smallest square grid that can fit n squares
   // Add 1 to reduce frequency of grid resizing
@@ -23,7 +25,7 @@ function App() {
     let isMounted = true;
     setLoading(true);
     setError(null);
-    fetch("http://localhost:5272/squares", {
+  fetch(`${API_URL}/squares`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json, application/problem+json',
@@ -73,7 +75,7 @@ function App() {
       console.log("Adding new square...");
       const controller = new AbortController();
       timeoutId = setTimeout(() => controller.abort(), 10000);
-      const response = await fetch("http://localhost:5272/squares", {
+  const response = await fetch(`${API_URL}/squares`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json, application/problem+json',
@@ -106,7 +108,7 @@ function App() {
     setProcessing(true);
     try {
       console.log("Clearing all squares...");
-      const response = await fetch("http://localhost:5272/squares", {
+  const response = await fetch(`${API_URL}/squares`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json, application/problem+json',
@@ -131,7 +133,7 @@ function App() {
   const gridSize = getGridSize(squares.length);
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 pt-8">
+    <div className="min-h-screen flex flex-col items-center bg-orange-200 pt-8">
       <div className="mb-6">
         <Controls 
           onAddSquare={addNewSquare} 
