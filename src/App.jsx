@@ -8,9 +8,17 @@ import { handleApiError, formatError } from './utils/errorHandling';
 const API_URL = import.meta.env.VITE_API_URL;
 
 function getGridSize(n) {
-  // Find the smallest square grid that can fit n squares
-  // Add 1 to reduce frequency of grid resizing
-  return Math.max(2, Math.ceil(Math.sqrt(n + 1)));
+  
+  if (n === 0) return 0; 
+  
+  const currentMinSize = Math.ceil(Math.sqrt(n));
+  const currentCapacity = currentMinSize * currentMinSize;
+  
+  if (n >= currentCapacity) {
+    return currentMinSize;
+  }
+  
+  return Math.max(2, currentMinSize);
 }
 
 function App() {
@@ -144,12 +152,15 @@ function App() {
         />
       </div>
       
-      <div className="grid-container">
-        <SquareGrid 
-          squares={squares} 
-          gridSize={gridSize} 
-        />
-      </div>
+      {squares.length > 0 && (
+        <div className="grid-container">
+          <SquareGrid 
+            key={squares.length} 
+            squares={squares} 
+            gridSize={gridSize} 
+          />
+        </div>
+      )}
     </div>
   );
 }
