@@ -41,7 +41,7 @@ That way there are less dependencies, but you still need Docker in some form to 
 1. Open up a terminal in main folder
 2. Build React app docker image
    ```sh
-   docker build -f squares.react/Dockerfile -t squares-react .   
+   docker build -t squares-react .   
    ```
 3. Run React app docker container
    ```js
@@ -70,6 +70,7 @@ That way there are less dependencies, but you still need Docker in some form to 
 ### These are some, but not all, considerations in general and about what could have been added or changed 
 
 - I have been focused on backend in my past employments, this is my first project in **React**, and so there can probably be found some "weird" choices and gotchas in the codebase.
+- There is a stutter when you press the buttons. Probably easily fixed.
 - Github copilot has been used, often for the worse :D
 - Usage of the streaming endpoint was not implemented.
 
