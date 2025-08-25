@@ -1,12 +1,68 @@
-# React + Vite
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Currently, two official plugins are available:
+Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`, `project_license`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+### Built With
+
+[![React][React.js]][React-url]
+
+# Getting Started
+
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
+
+## Prerequisites
+
+The easiest way of running this app is by building and running both the api and react app with docker.
+That way there are less dependencies, but you still need Docker.
+
+### Docker
+* Docker
+  ```sh
+  winget install -e --id Docker.DockerDesktop
+  ```
+### Non Docker
+* Node/NPM
+  ```sh
+  winget install -e --id OpenJS.NodeJS
+  ```
+
+## Installation
+
+### Docker 
+1. Open up a terminal in main folder
+2. Build React app docker image
+   ```sh
+   docker build -f squares.react/Dockerfile -t squares-react .   
+   ```
+3. Run React app docker container
+   ```js
+   docker run -p 3000:3000 squares-react
+   ```
+4. Open browser [http://localhost:3000)](http://localhost:3000)
+
+### Non Docker
+1. Open up a terminal in main folder
+2. Go to folder /squares.react
+3. Build React app
+   ```sh
+   npm install
+   ```
+4. Run React app
+   ```sh
+   npm run dev
+   ```
+5. Open browser [http://localhost:3000)](http://localhost:3000)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
