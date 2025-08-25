@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 /**
  * Single square component
  */
-const Square = ({ square, position }) => {
+const Square = memo(({ square, position }) => {
   const squareColor = square.color || square.Color || '#ff0000';
   
   return (
@@ -15,6 +15,6 @@ const Square = ({ square, position }) => {
     >
     </div>
   );
-};
+});
 
 export default Square;

@@ -24,8 +24,6 @@ function getGridSize(n) {
 function App() {
   const [squares, setSquares] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [adding, setAdding] = useState(false);
-  const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
   const abortControllerRef = useRef(new AbortController());
   
@@ -76,8 +74,6 @@ function App() {
   }
 
   const addNewSquare = async () => {
-    setAdding(true);
-    setProcessing(true);
     let timeoutId;
     try {
       console.log("Adding new square...");
@@ -106,14 +102,10 @@ function App() {
       clearTimeout(timeoutId);
       setError(formatError(err));
       console.error('Error adding new square:', err);
-    } finally {
-      setProcessing(false);
-      setAdding(false);
     }
   };
 
   const clearAllSquares = async () => {
-    setProcessing(true);
     try {
       console.log("Clearing all squares...");
   const response = await fetch(`${API_URL}/squares`, {
@@ -133,8 +125,6 @@ function App() {
     } catch (err) {
       setError(formatError(err));
       console.error('Error clearing squares:', err);
-    } finally {
-      setProcessing(false);
     }
   };
 
@@ -146,8 +136,6 @@ function App() {
         <Controls 
           onAddSquare={addNewSquare} 
           onClearSquares={clearAllSquares} 
-          adding={adding}
-          processing={processing}
           onReload={() => window.location.reload()}
         />
       </div>
@@ -155,7 +143,6 @@ function App() {
       {squares.length > 0 && (
         <div className="grid-container">
           <SquareGrid 
-            key={squares.length} 
             squares={squares} 
             gridSize={gridSize} 
           />
