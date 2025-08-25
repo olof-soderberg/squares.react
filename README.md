@@ -2,9 +2,11 @@
 ## About The Project
 
 This is the React.js webapp for the application Squares.
+<br>
 Squares is a project driven by passion for the creation of potentially an infinite amount of squares, each with a different color from the last!
 Functionality includes, but might not be limited to, adding and clearing all squares.
 
+<img width="381" height="356" alt="image" src="https://github.com/user-attachments/assets/d1f5c9ac-e368-4e7e-a55a-47bfd088157b" />
 
 
 ### Built With
@@ -13,13 +15,14 @@ Functionality includes, but might not be limited to, adding and clearing all squ
 
 # Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Download the code and follow installation steps below. 
+<br>
+**Obs**. This guide is for Windows only at the moment.
 
 ## Prerequisites
 
 The easiest way of running this app is by building and running both the api and react app with docker.
-That way there are less dependencies, but you still need Docker.
+That way there are less dependencies, but you still need Docker in some form to build the images and run the containers.
 
 ### Docker
 * Docker
@@ -44,7 +47,8 @@ That way there are less dependencies, but you still need Docker.
    ```js
    docker run -p 3000:3000 squares-react
    ```
-4. Open browser [http://localhost:3000)](http://localhost:3000)
+4. Run the api ([Follow guide](https://github.com/olof-soderberg/Squares.Backend?tab=readme-ov-file#getting-started))
+5. Open browser [http://localhost:3000)](http://localhost:3000)
 
 ### Non Docker
 1. Open up a terminal in main folder
@@ -57,7 +61,8 @@ That way there are less dependencies, but you still need Docker.
    ```sh
    npm run dev
    ```
-5. Open browser [http://localhost:3000)](http://localhost:3000)
+5. Run the api ([Follow guide](https://github.com/olof-soderberg/Squares.Backend?tab=readme-ov-file#getting-started))
+6. Open browser [http://localhost:3000)](http://localhost:3000)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
