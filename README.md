@@ -41,7 +41,7 @@ That way there are less dependencies, but you still need Docker in some form to 
 1. Open up a terminal in main folder
 2. Build React app docker image
    ```sh
-   docker build -f squares.react/Dockerfile -t squares-react .   
+   docker build -t squares-react .   
    ```
 3. Run React app docker container
    ```js
