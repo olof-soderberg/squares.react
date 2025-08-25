@@ -9,12 +9,8 @@ const SquareGrid = ({ squares, gridSize }) => {
     const getPositionForIndex = (index) => {
       const positions = [];
       
-      positions.push({ row: 0, col: 0 }); // 0: Top-left
-      positions.push({ row: 0, col: 1 }); // 1: Top-right
-      positions.push({ row: 1, col: 1 }); // 2: Bottom-right
-      positions.push({ row: 1, col: 0 }); // 3: Bottom-left
       
-      let size = 2;
+      let size = 0;
       
       while (positions.length <= index) {
         // Add a column on the right (top to bottom)
